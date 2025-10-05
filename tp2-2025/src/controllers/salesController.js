@@ -58,7 +58,7 @@ export const getSalesEmailEndpoint = async (req, res) => {
 //4
 export const updateSalesCuponDescuento = async (req, res) => {
   try {
-    const sale = await updateSaleCupon(req.params.couponUsed);
+    const sale = await updateSaleCupon(req.params.id);
     res.status(200).json({ msg: sale });
   } catch (error) {
     console.log("Error fetching sales: ", error);
