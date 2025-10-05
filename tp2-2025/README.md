@@ -16,7 +16,7 @@ En el presente repositorío encontrarás un proyecto de nodejs que ya tiene codi
 ## TUS TAREAS SON LAS SIGUIENTES POR ORDEN DE PRIORIDAD
 
 - Desarrollar el endpoint para obtener una venta particular por su id
-- Desarrollar el endpoint para obtener todas las ventas con una nueva propiedad llamada total que sea el monto total de la venta **_(price quantity)_** con el formato de endpoint **_/api/sales/total_**
+- Desarrollar el endpoint para obtener todas las ventas con una nueva propiedad llamada total que sea el monto total de la venta **_(price X quantity)_** con el formato de endpoint **_/api/sales/total_**
 - Desarrollar el endpoint para obtener las ventas filtradas por el mail del cliente. Queremos un listado de ventas de un cliente en particular utilizando el formato de endpoint **_/api/sales/customer/:email_**
 - Desarrollar el endpoint para actualizar/cambiar el uso de cupon de descuento de la propiedad couponUsed
   Necesitamos un endpoint que devuelva un ranking/top N de productos mas vendidos utilizando el formato de endpoint **_/api/sales/top-products?limit=5_**
