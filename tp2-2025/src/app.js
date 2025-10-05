@@ -19,9 +19,9 @@ app.use("/api/sales", salesRoutes);
 
 // Ruta base
 app.get("/", (req, res) => {
-    res.json({
-        message: "API TP2 - Examen 2025 C1"
-    });
+  res.json({
+    message: "API TP2 - Examen 2025 C1",
+  });
 });
 
 export default app;
