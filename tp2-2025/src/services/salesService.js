@@ -3,7 +3,7 @@ import {
   findSale,
   findSaleByEmail,
   updateSaleCouponUsed,
-  findTopProducts,
+  getSalesTopRank,
 } from "../data/salesData.js";
 
 export const getSales = async (page, pageSize) => {
@@ -27,19 +27,19 @@ export const getSalesTotal = async () => {
 };
 
 //3
-export const getSalesEmail = async () => {
-  const sales = await findSaleByEmail();
+export const getSalesEmail = async (email) => {
+  const sales = await findSaleByEmail(email);
   return sales;
 };
 
 //4
-export const updateSaleCupon = async (saleId, couponUsed) => {
-  const sales = await updateSaleCouponUsed(saleId, couponUsed);
+export const updateSaleCupon = async (saleId) => {
+  const sales = await updateSaleCouponUsed(saleId);
   return sales;
 };
 
 //5
 export const getTopProducts = async (limit) => {
-  const products = await findTopProducts(limit);
+  const products = await getSalesTopRank(limit);
   return products;
 };

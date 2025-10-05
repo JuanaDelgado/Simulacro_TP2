@@ -31,31 +31,53 @@ export async function findSaleByEmail(email) {
   const db = getDbSupplies();
   const sale = await db
     .collection("sales")
-    .updateOne({ "customers.email": email })
+    .find({ "customer.email": email })
     .toArray();
   return sale;
 }
 
 //4
-export async function updateSaleCouponUsed(saleId, couponUsed) {
+export async function updateSaleCouponUsed(saleId) {
   const db = getDbSupplies();
+
+  // Primero verifico si la venta existe y la obtengo
   const sale = await db
+    .collection("sales")
+    .findOne({ _id: new ObjectId(saleId) });
+  if (!sale) {
+    throw new Error("Venta no encontrada");
+  }
+
+  // Cupon es un booleano
+  // por lo que seria mas facil cambiarlo a true o false y
+  // viceversa que recibirlo como un valor por parametro
+  const updateCupon = !sale.couponUsed;
+
+  // Actualizo el campo couponUsed
+  const result = await db
     .collection("sales")
     .updateOne(
       { _id: new ObjectId(saleId) },
-      { $set: { couponUsed: couponUsed } },
+      { $set: { couponUsed: updateCupon } },
     );
-  return sale;
+  return result;
 }
 
 //5
 export async function getSalesTopRank(pageSize) {
   const db = getDbSupplies();
-  const sales = await db
-    .collection("sales")
-    .find()
-    .sort({ campo: 1 })
-    .limit(pageSize)
-    .toArray();
+  console.log("PageSize en data: ", pageSize);
+  // La funcion Agregate es para hacer consultas mas complejas en MongoDB
+  const sales = await db.collection("sales").aggregate([
+    { $unwind: "$items" }, // Agarra unicamente el array de items de las ventas y lo descompone
+    {
+      $group: { // Agrupa los resultados
+        _id: "$items.name",       // Agrupa por nombre de producto
+        totalAppearances: { $sum: 1 } // Suma uno cada vez que aparece el producto
+      }
+    },
+    { $sort: { totalAppearances: -1 } }, // Ordena de mayor a menor
+    { $limit: pageSize } // Agarra el top N productos
+  ]).toArray();
   return sales;
 }
